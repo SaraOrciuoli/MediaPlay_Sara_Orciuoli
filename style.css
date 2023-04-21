@@ -1,0 +1,15 @@
+.sfondo{
+    background: url(./Sfondo\ chitarra.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.img-rounded{
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    margin-left: 100px;
+}
+
+.MyMargin{
+margin-top: 100px;
+}
