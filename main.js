@@ -26,24 +26,51 @@
 
 
     // Catturare il contenitore della colonna 2
-    let wrapper = document.querySelector('wrapper');
+    let wrapped = document.querySelector('#wrapped');
+    //  Sezione Audio e Cover 
 
-    // Sezione IMG e COVER
-    function createCover(){
+    function createCover() {
         let div = document.createElement('div');
         div.classList.add('col-12', 'col-md-3', 'col-lg-5', 'd-flex', 'justify-content-center');
-        innerHTML = `
-       `
-        wrapper.appendChild(div);
+        div.innerHTML = `  
+        <img class="img-rounded" src="./cover/cover-1.jpg" alt="">
+         
+        <audio preload="metadata">
+            <source src="./canzoni progetto/Backstreet Boys - I Want It That Way.mp3" type="audio/mpeg">
+        </audio>
+        `;
+
+        wrapped.appendChild(div);
     }
 
     function createInfoTrack(){
         let div = document.createElement('div');
-        div.classList.add('col-12', 'col-md-5', 'col-lg-6', 'mt-5');
+        div.classList.add('col-12', 'col-md-5', 'col-lg-6', 'MyMargin');
         div.innerHTML = `
-        
-       
+        <!-- Sezione Info Track -->
+        <h2 class="text-center">Titolo del brano</h2>
+        <h3 class="text-center">Nome Artista</h3>
+
+        <div class="progress mt-5">
+            <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <!-- Durata inizio-fine -->
+        <div class="d-flex justify-content-between">
+            <p>0:00</p>
+            <p>5:00</p>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-dark fs-4"><i class="fa-solid fa-backward"></i></button>
+            <button class="btn btn-outline-dark fs-4"><i class="fa-brands fa-google-play"></i></button>
+            <button class="btn btn-outline-dark fs-4"><i class="fa-solid fa-forward"></i></button>
+        </div>`
+
+        wrapped.appendChild(div);
     }
-    createInfoTrack();
-    // Invocare la funzione 
+    // Funzione che crea la Cover audio
     createCover();
+    // Funzione che crea l'Info Track
+    createInfoTrack();
+    
