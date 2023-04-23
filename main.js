@@ -30,11 +30,17 @@ let wrapped = document.querySelector('#wrapped');
 // Inizializzare il tag audio, per poterlo richiamare ogni volta che cambio audio 
 let audio = null;
 
+function mapRangeValue(x, in_min, in_max, out_min, out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 // Contenitore della mia lista
 let counterTrack = 0;
 
 //  Sezione Audio e Cover 
 function createCover() {
+    // Reset del contenuto di wrapper
+    wrapped.innerHTML = '';
     let div = document.createElement('div');
     div.classList.add('col-12', 'col-md-3', 'col-lg-5', 'd-flex', 'justify-content-center');
     div.innerHTML = `  
@@ -60,14 +66,14 @@ function createInfoTrack() {
         <h2 class="text-center">${tracks[counterTrack].title}</h2>
         <h3 class="text-center">${tracks[counterTrack].artist}</h3>
 
-        <div class="progress mt-5">
-            <div class="progress-bar w-75" role="progressbar" aria-label="Basic example" aria-valuenow="75"
-                aria-valuemin="0" aria-valuemax="100"></div>
+     
+        <div class="progress mt-4" style="height: 7px; ">
+           <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <!-- Durata inizio-fine -->
         <div class="d-flex justify-content-between">
-            <p>0:00</p>
-            <p>5:00</p>
+            <p id="start">0:00</p>
+            <p id="end"></p>
         </div>
 
         <div class="d-flex justify-content-between mt-3">
@@ -94,8 +100,48 @@ function createInfoTrack() {
             btnPlay.innerHTML = '<i class="fa-brands fa-google-play"></i>';
 
         }
-        
 
+
+    })
+
+    btnForward.addEventListener('click', () => {
+        if (counterTrack < tracks.length - 1) {
+            counterTrack++;
+        } else {
+            counterTrack = 0;
+        }
+
+
+        createCover();
+        createInfoTrack();
+    })
+
+    btnBackward.addEventListener('click', () => {
+        if (counterTrack > 0) {
+            counterTrack--;
+        } else {
+            counterTrack = tracks.length - 1;
+        }
+
+
+        createCover();
+        createInfoTrack();
+    })
+
+    let end = document.querySelector('#end');
+    audio.addEventListener('loadedmetadata', () => {
+        end.innerHTML = (audio.duration / 60).toFixed(2);
+    })
+
+    let start = document.querySelector('#start');
+    audio.addEventListener('timeupdate', () => {
+        start.innerHTML = (audio.currentTime / 60).toFixed(2);
+
+        let progressBar = document.querySelector('.progress-bar');
+
+
+// currentTime, startTime, endTime, startProgress%, endProgress%
+        progressBar.style.width =`${mapRangeValue(audio.currentTime, 0, audio.duration, 0, 100)}%`
     })
 
 
